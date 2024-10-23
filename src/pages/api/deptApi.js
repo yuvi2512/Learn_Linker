@@ -3,7 +3,6 @@ import { pool } from "../../../lib/db";
 export default async function handler(req, res) {
   if (req.method === "POST") {
     const { email, department } = req.body;
-    console.log("data", req.body);
     try {
       const client = await pool.connect();
       try {

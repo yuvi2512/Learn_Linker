@@ -12,6 +12,7 @@ import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import { Button, Divider } from "@mui/material";
 import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 import axios from "axios";
 import toast from "react-hot-toast";
 
@@ -26,6 +27,10 @@ const Attendance = () => {
     Present: 0,
   });
   const [selectedDate, setSelectedDate] = useState();
+
+  const { data: session, status } = useSession();
+  console.log("Sessiondata:", session);
+  
 
   const fetchData = async () => {
     try {
@@ -43,9 +48,6 @@ const Attendance = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
-  console.log(attendanceData);
-  console.log(selectedIds);
 
   const columns = [
     {

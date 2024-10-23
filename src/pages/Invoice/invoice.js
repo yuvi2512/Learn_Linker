@@ -55,7 +55,7 @@ const EditUser = () => {
 
       const response = await axios.post("/api/invoiceApi", formData);
       setMessage("Data Added Successfully");
-      console.log(response.data);
+   
     } catch (error) {
       setMessage("Something went wrong");
       console.error("Error updating user details:", error);

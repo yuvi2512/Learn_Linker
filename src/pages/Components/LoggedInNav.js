@@ -14,10 +14,13 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Link from "next/link";
-import {  signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const NavBar = () => {
+  const { data: session } = useSession(); // Retrieve session
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const router = useRouter()
 
   const handleDrawerToggle = () => {
     setDrawerOpen(!drawerOpen);
@@ -25,6 +28,7 @@ const NavBar = () => {
 
   const handleLogout = () => {
     signOut();
+    router.push("/Login/Login")
   };
 
   return (
@@ -51,18 +55,29 @@ const NavBar = () => {
           </Typography>
 
           <Box sx={{ display: { xs: "none", md: "block" } }}>
-            <Link href="/Components/homePage" passHref>
-              <Button sx={{ color: "white" }}>Home</Button>
-            </Link>
-            <Link href="/Components/Attendance" passHref>
-              <Button sx={{ color: "white" }}>Attendance</Button>
-            </Link>
-            <Link href="/Components/GenerateMarksheet" passHref>
-              <Button sx={{ color: "white" }}>Marksheet</Button>
-            </Link>
-            <Link href="/Components/StudentSection/Marksheet" passHref>
-              <Button sx={{ color: "white" }}>View Result</Button>
-            </Link>
+            {session?.user.role === "teacher" && (
+              <>
+                <Link href="/Components/TeacherHome" passHref>
+                  <Button sx={{ color: "white" }}>Home</Button>
+                </Link>
+                <Link href="/Components/Attendance" passHref>
+                  <Button sx={{ color: "white" }}>Attendance</Button>
+                </Link>
+                <Link href="/Components/GenerateMarksheet" passHref>
+                  <Button sx={{ color: "white" }}>Marksheet</Button>
+                </Link>
+              </>
+            )}
+            {session?.user.role === "student" && (
+              <>
+                <Link href="/Components/studentHome" passHref>
+                  <Button sx={{ color: "white" }}>Home</Button>
+                </Link>
+                <Link href="/Components/StudentSection/Marksheet" passHref>
+                  <Button sx={{ color: "white" }}>View Result</Button>
+                </Link>
+              </>
+            )}
             <Button sx={{ color: "white" }} onClick={handleLogout}>
               Logout
             </Button>
@@ -78,11 +93,39 @@ const NavBar = () => {
           onKeyDown={handleDrawerToggle}
         >
           <List>
-            <ListItem button>
-              <Link href="/Components/Home" passHref>
-                <ListItemText primary="Home" />
-              </Link>
-            </ListItem>
+            {session?.user.role === "teacher" && (
+              <>
+               <ListItem button>
+                  <Link href="/Components/TeacherHome" passHref>
+                    <ListItemText primary="Home" />
+                  </Link>
+                </ListItem>
+                <ListItem button>
+                  <Link href="/Components/Attendance" passHref>
+                    <ListItemText primary="Attendance" />
+                  </Link>
+                </ListItem>
+                <ListItem button>
+                  <Link href="/Components/GenerateMarksheet" passHref>
+                    <ListItemText primary="Marksheet" />
+                  </Link>
+                </ListItem>
+              </>
+            )}
+            {session?.user.role === "student" && (
+              <>
+                <ListItem button>
+                  <Link href="/Components/studentHome" passHref>
+                    <ListItemText primary="Home" />
+                  </Link>
+                </ListItem>
+                <ListItem button>
+                  <Link href="/Components/StudentSection/Marksheet" passHref>
+                    <ListItemText primary="View Result" />
+                  </Link>
+                </ListItem>
+              </>
+            )}
             <ListItem button onClick={handleLogout}>
               <ListItemText primary="Logout" />
             </ListItem>

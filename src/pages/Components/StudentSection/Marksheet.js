@@ -21,7 +21,7 @@ const Marksheet = () => {
         setRows(modifiedData);
         toast.success("Data fetched successfully!");
       } else {
-        console.log("No data found");
+      
         toast.error("No data found");
       }
     } catch (error) {

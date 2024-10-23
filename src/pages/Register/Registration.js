@@ -37,16 +37,27 @@ const Register = () => {
   }, [isSubmitSuccessful, reset]);
 
   const onSubmit = async (data) => {
-    const action = "register";
-    try {
-      const response = await axios.post("/api/registrationApi", {
-        ...data,
-        action,
-      });
-      setMessage("User Registered Successfully");
-    } catch (error) {
-      setMessage("something went wrong");
-      console.error("Error submitting form:", error);
+
+    const name = data?.name
+    const email = data?.email
+    const password = data?.password
+    const role = data?.role_type
+
+    const res = await fetch('/api/auth/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name, email, password,role }),
+    });
+
+    const response = await res.json();
+    console.log(response)
+
+    if (res.ok) {
+      alert('Registration successful!');
+    } else {
+      console.error(response.message);
     }
   };
 
@@ -101,8 +112,8 @@ const Register = () => {
               error={!!errors.role_type}
               helperText={errors.role_type?.message}
               >
-              <MenuItem value='Student'>Student</MenuItem>
-              <MenuItem value='Teacher'>Teacher</MenuItem>
+              <MenuItem value='student'>Student</MenuItem>
+              <MenuItem value='teacher'>Teacher</MenuItem>
             </TextField>
 
             <TextField

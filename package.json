@@ -17,6 +17,7 @@
     "@mui/x-date-pickers": "^7.20.0",
     "apexcharts": "^3.54.1",
     "axios": "^1.6.8",
+    "bcryptjs": "^2.4.3",
     "dayjs": "^1.11.13",
     "js-cookie": "^3.0.5",
     "jspdf": "^2.5.2",
@@ -24,13 +25,15 @@
     "next": "^14.2.2",
     "next-auth": "^4.24.8",
     "next-themes": "^0.3.0",
-    "pg": "^8.11.5",
+    "pg": "^8.13.0",
+    "pg-hstore": "^2.3.4",
     "react": "^18",
     "react-apexcharts": "^1.4.1",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.3",
     "react-hot-toast": "^2.4.1",
-    "react-router-dom": "^6.22.3"
+    "react-router-dom": "^6.22.3",
+    "sequelize": "^6.37.4"
   },
   "devDependencies": {
     "eslint": "^8",

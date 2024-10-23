@@ -11,6 +11,7 @@ import {
   CardContent,
   Avatar,
 } from "@mui/material";
+import { AppBar, Toolbar } from '@mui/material';
 import axios from "axios";
 import AttendanceChart from "@/pages/Components/AttendanceChart";
 
@@ -28,7 +29,7 @@ const HomePage = () => {
       if (response.status === 200 && response.data.length > 0) {
         setAttendanceData(response.data);
       }
-    } catch (error) {
+    } catch (error) { 
       console.error("Error checking attendance:", error);
       toast.error("Failed to get attendance.");
     }
@@ -40,6 +41,18 @@ const HomePage = () => {
 
   return (
     <>
+    <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" style={{ flexGrow: 1 }}>
+            Coaching Institute Manager
+          </Typography>
+          <Button color="inherit">Dashboard</Button>
+          <Button color="inherit">Manage Students</Button>
+          <Button color="inherit">Courses</Button>
+          <Button color="inherit">Profile</Button>
+          <Button color="inherit">Logout</Button>
+        </Toolbar>
+      </AppBar>
       <Grid container spacing={6}>
         <Grid item xs={12} sm={6} lg={7}>
           <Box sx={{ textAlign: "center", py: 6 }}>

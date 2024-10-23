@@ -23,7 +23,6 @@ const GenerateMarksheet = () => {
     try {
       const response = await axios.get("/api/getStudentAPI");
       if (response.data) {
-        console.log(response.data);
         setStudents(response.data);
         toast.success("Students data fetched successfully!");
       }
@@ -71,7 +70,7 @@ const GenerateMarksheet = () => {
       });
 
       if (response.status === 200) {
-        console.log("Data inserted successfully:", response.data);
+       
         toast.success("Marksheet generated successfully!");
       } else {
         console.error("Error inserting data:", response.data.error);

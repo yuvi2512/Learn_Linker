@@ -1,55 +1,29 @@
-import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
-
-
-console.log( process.env.JWT_SECRET  )
+import NextAuth from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import User  from '../../models/user';
+import bcrypt from 'bcryptjs';
 
 export default NextAuth({
   providers: [
     CredentialsProvider({
-      name: "Credentials",
-
-      credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
-      },
-
       async authorize(credentials) {
-        console.log("Credentials received:", credentials);
-        const res = await fetch("http://localhost:3000/api/registrationApi", {
-          method: "POST",
-          body: JSON.stringify({
-            email: credentials.email,
-            password: credentials.password,
-            action: "login",
-          }),
-          headers: { "Content-Type": "application/json" },
-        });
-
-        const user = await res.json();
-        console.log("User received from API:", user);
-
-        if (res.ok && user && user.user) {
-          return {
-            email: user.user.email,
-            name: user.user.name,
-            id: user.user.id,
-          };
+        const user = await User.findOne({ where: { email: credentials.email } });
+        if (!user) {
+          throw new Error('No user found with that email');
         }
 
-        throw new Error(user.error || "Login failed");
-      },
-    }),
+        const isPasswordValid = await bcrypt.compare(credentials.password, user.password);
+        if (!isPasswordValid) {
+          throw new Error('Password is incorrect');
+        }
+
+        return { id: user.id, email: user.email, name: user.name, role: user.role };
+      }
+    })
   ],
-  pages: {
-    signIn: "/login",
-  },
+  debug: true,
   session: {
-    strategy: "jwt",
-  },
-  jwt: {
-    secret: process.env.JWT_SECRET,
-    maxAge: 30 * 24 * 60 * 60,
+    strategy: 'jwt',
   },
   callbacks: {
     async jwt({ token, user }) {
@@ -57,17 +31,14 @@ export default NextAuth({
         token.id = user.id;
         token.email = user.email;
         token.name = user.name;
+        token.role = user.role;
       }
-      console.log("JWT Callback: Token:", token);
       return token;
     },
     async session({ session, token }) {
-      session.user.id = token.id;
-      session.user.email = token.email;
-      session.user.name = token.name;
-
-      console.log("JWT Callback: Token:", session);
+      session.user = token;
       return session;
-    },
+    }
   },
+  secret: process.env.NEXTAUTH_SECRET,
 });

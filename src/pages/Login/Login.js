@@ -1,11 +1,17 @@
 "use client";
-import React, { useState,useEffect } from "react";
-import { TextField, Button, Stack, Card, CardHeader, Typography } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import {
+  TextField,
+  Button,
+  Stack,
+  Card,
+  CardHeader,
+  Typography,
+} from "@mui/material";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
-import { signIn } from "next-auth/react"; 
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
-import { getCsrfToken } from "next-auth/react";
 import { useSession } from "next-auth/react";
 
 const Login = () => {
@@ -21,35 +27,26 @@ const Login = () => {
   const { errors } = formState;
   const [loginError, setLoginError] = useState("");
   const router = useRouter();
-  const [csrfToken, setCsrfToken] = useState("");
-
-  if (session) {
-    console.log("Session:", session);
-  }
-
-  useEffect(() => {
-    const fetchCsrfToken = async () => {
-      const token = await getCsrfToken();
-      setCsrfToken(token);
-    };
-    fetchCsrfToken();
-  }, []);
 
   const onSubmit = async (formData) => {
-    const result = await signIn("credentials", {
+    const res = await signIn("credentials", {
       redirect: false,
-      ...formData,
-      csrfToken,
+      email: formData.email,
+      password: formData.password,
     });
 
-    console.log("SignIn Result:", result);
-    if (result.error) {
-      setLoginError(result.error); 
+    if (res?.error) {
+      setLoginError(res.error);
     } 
-    else {
-      router.push("/Components/homePage");
-    }
   };
+
+  useEffect(()=>{
+    if(session?.user?.role == 'student')
+    router.push("/Components/studentHome");
+
+  if((session?.user?.role == 'teacher'))
+  router.push("/Components/TeacherHome");
+  },[session?.user])
 
   return (
     <Card elevation={3} sx={{ margin: 10, backgroundColor: "#f3f6f9" }}>
@@ -92,15 +89,23 @@ const Login = () => {
           </Button>
         </Stack>
 
-        {loginError && (
-          <Typography variant="body2" align="center" pt={2} style={{ color: "red" }}>
-            {loginError}
-          </Typography>
-        )}
+        {/* {loginError && ( */}
+        <Typography
+          variant="body2"
+          align="center"
+          pt={2}
+          style={{ color: "red" }}
+        >
+          {loginError}
+        </Typography>
+        {/* // )} */}
       </form>
       <Typography variant="body2" align="center" pt={5}>
         Create a new account{" "}
-        <Link href="/Register/Registration" style={{ textDecoration: "none", color: "blue" }}>
+        <Link
+          href="/Register/Registration"
+          style={{ textDecoration: "none", color: "blue" }}
+        >
           Sign Up
         </Link>
       </Typography>
