@@ -28,9 +28,7 @@ const Attendance = () => {
   });
   const [selectedDate, setSelectedDate] = useState();
 
-  const { data: session, status } = useSession();
-  console.log("Sessiondata:", session);
-  
+  const { data: session, status } = useSession();  
 
   const fetchData = async () => {
     try {
@@ -51,12 +49,7 @@ const Attendance = () => {
 
   const columns = [
     {
-      field: "student_id",
-      headerName: "Enrollment Number",
-      width: 200,
-    },
-    {
-      field: "student_name",
+      field: "name",
       headerName: "Name",
       width: 200,
     },
@@ -69,7 +62,6 @@ const Attendance = () => {
   const handleDialogClose = (confirmed) => {
     setOpenDialog(false);
     if (confirmed) {
-      // Pass the attendanceData stored in state to submitAttendance
       submitAttendance(attendanceData);
     } else {
       toast.success("Attendance update canceled.");
@@ -88,10 +80,10 @@ const Attendance = () => {
 
     // Prepare attendance data before opening the dialog
     const preparedAttendanceData = rows.map((student) => {
-      const isPresent = selectedIds.includes(student.student_id.toString());
+      const isPresent = selectedIds.includes(student.id.toString());
       return {
-        student_id: student.student_id,
-        student_name: student.student_name,
+        student_id: student.id,
+        student_name: student.name,
         present: isPresent ? "True" : "False",
         absent: isPresent ? "False" : "True",
         date: selectedDate,
@@ -205,7 +197,7 @@ const Attendance = () => {
           <DataGrid
             rows={rows}
             columns={columns}
-            getRowId={(row) => `${row.student_id}`}
+            getRowId={(row) => `${row.id}`}
             checkboxSelection
             onRowSelectionModelChange={(newSelection) => {
               handleSelectionChange(newSelection);

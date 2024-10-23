@@ -6,7 +6,7 @@ export default async function handler(req, res) {
       const client = await pool.connect();
       try {
         const result = await client.query(
-          "SELECT * from public.student_details"
+          "SELECT * from public.users where role ='student'"
         );
         res.status(200).json(result.rows);
       } finally {

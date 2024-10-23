@@ -55,13 +55,13 @@ const GenerateMarksheet = () => {
     event.preventDefault();
 
     const selectedStudentInfo = students.find(
-      (student) => student.student_id === selectedStudent
+      (student) => student.id === selectedStudent
     );
 
     const data = subjects.map((subjectRow) => ({
       ...subjectRow,
-      studentId: selectedStudentInfo.student_id,
-      studentName: selectedStudentInfo.student_name,
+      studentId: selectedStudentInfo.id,
+      studentName: selectedStudentInfo.name,
     }));
 
     try {
@@ -85,7 +85,7 @@ const GenerateMarksheet = () => {
   };
 
   const selectedStudentInfo = students.find(
-    (student) => student.student_id === selectedStudent
+    (student) => student.id === selectedStudent
   );
 
   const handleRemoveRow = (index) => {
@@ -110,7 +110,7 @@ const GenerateMarksheet = () => {
                   label="Student Id"
                   variant="outlined"
                   value={
-                    selectedStudentInfo ? selectedStudentInfo.student_id : ""
+                    selectedStudentInfo ? selectedStudentInfo.id : ""
                   }
                   disabled
                 />
@@ -127,10 +127,10 @@ const GenerateMarksheet = () => {
                 >
                   {students.map((student) => (
                     <MenuItem
-                      key={student.student_id}
-                      value={student.student_id}
+                      key={student.id}
+                      value={student.id}
                     >
-                      {student.student_name}
+                      {student.name}
                     </MenuItem>
                   ))}
                 </TextField>

@@ -6,12 +6,15 @@ import {
   Stack,
   Card,
   CardHeader,
+  Box,
   Typography,
-  MenuItem
+  MenuItem,
+  Checkbox,
 } from "@mui/material";
+import { FormControlLabel } from "@mui/material";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
-import axios from "axios";
+import toast from "react-hot-toast";
 
 const Register = () => {
   const form = useForm({
@@ -37,25 +40,24 @@ const Register = () => {
   }, [isSubmitSuccessful, reset]);
 
   const onSubmit = async (data) => {
+    const name = data?.name;
+    const email = data?.email;
+    const password = data?.password;
+    const role = data?.role_type;
 
-    const name = data?.name
-    const email = data?.email
-    const password = data?.password
-    const role = data?.role_type
-
-    const res = await fetch('/api/auth/register', {
-      method: 'POST',
+    const res = await fetch("/api/auth/register", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name, email, password,role }),
+      body: JSON.stringify({ name, email, password, role }),
     });
 
     const response = await res.json();
-    console.log(response)
+    console.log(response);
 
     if (res.ok) {
-      alert('Registration successful!');
+      toast.success("Registration successful!");
     } else {
       console.error(response.message);
     }
@@ -65,97 +67,148 @@ const Register = () => {
 
   return (
     <>
-      <Card elevation={3} sx={{ margin: 10, backgroundColor: "#f3f6f9" }}>
-        <CardHeader
-          title="Register Here"
-          titleTypographyProps={{ variant: "subtitle2" }}
+      <Box
+        className="content-right"
+        sx={{ backgroundColor: "background.paper" }}
+      >
+        <Box
           sx={{
-            backgroundColor: "rgba(74, 87, 169, 0.1)",
-            color: "#46464E",
-            padding: 1,
-            marginBottom: 2,
+            p: [9],
+            height: "80%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
-        />
-        <form noValidate onSubmit={handleSubmit(onSubmit)}>
-          <Stack spacing={2}>
-            <TextField
-              label="Name"
-              type="text"
-              {...register("name", {
-                required: "Name is Required",
-              })}
-              error={!!errors.name}
-              helperText={errors.name?.message}
-            />
+        >
+          <Box sx={{ width: "100%", maxWidth: 400 }}>
+            <Box sx={{ my: 2 }}>
+              <Typography variant="h3" sx={{ mb: 1.5 }}>
+                Learn Linker
+              </Typography>
+              <Typography sx={{ color: "text.secondary" }}>
+                Management System For Educational Institutes.
+              </Typography>
+            </Box>
+            <form noValidate onSubmit={handleSubmit(onSubmit)}>
+              <Stack spacing={2}>
+                <TextField
+                  label="Name"
+                  type="text"
+                  {...register("name", {
+                    required: "Name is Required",
+                  })}
+                  error={!!errors.name}
+                  helperText={errors.name?.message}
+                />
 
-            <TextField
-              label="Email"
-              type="email"
-              {...register("email", {
-                required: "email is Required",
-                pattern: {
-                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                  message: "Invalid Email Format",
-                },
-              })}
-              error={!!errors.email}
-              helperText={errors.email?.message}
-            />
+                <TextField
+                  label="Email"
+                  type="email"
+                  {...register("email", {
+                    required: "email is Required",
+                    pattern: {
+                      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                      message: "Invalid Email Format",
+                    },
+                  })}
+                  error={!!errors.email}
+                  helperText={errors.email?.message}
+                />
 
-            <TextField
-              label="Role Type"
-              type="text"
-              select
-              {...register("role_type", {
-                required: "Role Type is Required",
-              })}
-              error={!!errors.role_type}
-              helperText={errors.role_type?.message}
-              >
-              <MenuItem value='student'>Student</MenuItem>
-              <MenuItem value='teacher'>Teacher</MenuItem>
-            </TextField>
+                <TextField
+                  label="Role Type"
+                  type="text"
+                  select
+                  {...register("role_type", {
+                    required: "Role Type is Required",
+                  })}
+                  error={!!errors.role_type}
+                  helperText={errors.role_type?.message}
+                >
+                  <MenuItem value="student">Student</MenuItem>
+                  <MenuItem value="teacher">Teacher</MenuItem>
+                </TextField>
 
-            <TextField
-              label="Password"
-              type="password"
-              {...register("password", {
-                required: "Password is Required",
-                pattern: {
-                  value:
-                    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/,
-                  message:
-                    "Password must be at least 6 characters long and contain at least one special character.",
-                },
-              })}
-              error={!!errors.password}
-              helperText={errors.password?.message}
-            />
+                <TextField
+                  label="Password"
+                  type="password"
+                  {...register("password", {
+                    required: "Password is Required",
+                    pattern: {
+                      value:
+                        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/,
+                      message:
+                        "Password must be at least 6 characters long and contain at least one special character.",
+                    },
+                  })}
+                  error={!!errors.password}
+                  helperText={errors.password?.message}
+                />
 
-            <TextField
-              label="Confirm Password"
-              type="password"
-              {...register("confirmPassword", {
-                required: "Confirm Password is Required",
-                validate: (value) =>
-                  value === watchPassword || "The passwords do not match",
-              })}
-              error={!!errors.confirmPassword}
-              helperText={errors.confirmPassword?.message}
-            />
+                <TextField
+                  label="Confirm Password"
+                  type="password"
+                  {...register("confirmPassword", {
+                    required: "Confirm Password is Required",
+                    validate: (value) =>
+                      value === watchPassword || "The passwords do not match",
+                  })}
+                  error={!!errors.confirmPassword}
+                  helperText={errors.confirmPassword?.message}
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      {...register("privacyPolicy", {
+                        required: "You must agree to the privacy policy",
+                      })}
+                    />
+                  }
+                  label={
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        flexWrap: "wrap",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Typography sx={{ color: "text.secondary" }}>
+                        I agree to privacy policy & terms
+                      </Typography>
+                    </Box>
+                  }
+                />
 
-            <Button type="submit" variant="contained" color="primary">
-              Register
-            </Button>
-          </Stack>
-        </form>
-        <Typography variant="body2" align="center" pt={2}>
-          Already have an account?{" "}
-          <Link href="/Login/Login" style={{ textDecoration: "none" }}>
-            Login
-          </Link>
-        </Typography>
-      </Card>
+                <Button type="submit" variant="contained" color="primary">
+                  Sign Up
+                </Button>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    flexWrap: "wrap",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Typography sx={{ color: "text.secondary", mr: 2 }}>
+                    Already have an account?
+                  </Typography>
+
+                  <Typography>
+                    <Link
+                      href="/Login/Login"
+                      style={{ textDecoration: "none" }}
+                    >
+                      Sign in instead
+                    </Link>
+                  </Typography>
+                </Box>
+              </Stack>
+            </form>
+          </Box>
+        </Box>
+      </Box>
     </>
   );
 };

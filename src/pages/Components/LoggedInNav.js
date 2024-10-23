@@ -26,17 +26,16 @@ const NavBar = () => {
     setDrawerOpen(!drawerOpen);
   };
 
-  const handleLogout = () => {
-    signOut();
-    router.push("/Login/Login")
+  const handleLogout = async () => {
+    await signOut({ callbackUrl: '/Login/Login' });
   };
+  
 
   return (
     <>
       <AppBar
         position="static"
-        color="transparent"
-        sx={{ backgroundColor: "#8B0000" }}
+       color="primary"
       >
         <Toolbar>
           <IconButton
@@ -65,6 +64,9 @@ const NavBar = () => {
                 </Link>
                 <Link href="/Components/GenerateMarksheet" passHref>
                   <Button sx={{ color: "white" }}>Marksheet</Button>
+                </Link>
+                <Link href="/Components/Assignments" passHref>
+                  <Button sx={{ color: "white" }}>Assignment</Button>
                 </Link>
               </>
             )}

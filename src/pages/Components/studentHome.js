@@ -16,15 +16,14 @@ import axios from "axios";
 import AttendanceChart from "@/pages/Components/AttendanceChart";
 
 const HomePage = () => {
-  const [StudentId, setStudentId] = useState("1");
   const [AttendanceData, setAttendanceData] = useState([]);
   const { data: session, status } = useSession();
-  console.log("Session:", session);
+  console.log("Session:", session?.user?.id);
   
   const getAttendance = async () => {
     try {
       const response = await axios.get("/api/getAttendance", {
-        params: { studentId: StudentId },
+        params: { studentId: session?.user?.id },
       });
       if (response.status === 200 && response.data.length > 0) {
         setAttendanceData(response.data);
@@ -36,12 +35,12 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    if (StudentId) getAttendance();
-  }, []);
+    if (session?.user?.id) getAttendance();
+  }, [session?.user?.id]);
 
   return (
     <>
-    <AppBar position="static">
+    {/* <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" style={{ flexGrow: 1 }}>
             Coaching Institute Manager
@@ -52,12 +51,12 @@ const HomePage = () => {
           <Button color="inherit">Profile</Button>
           <Button color="inherit">Logout</Button>
         </Toolbar>
-      </AppBar>
+      </AppBar> */}
       <Grid container spacing={6}>
         <Grid item xs={12} sm={6} lg={7}>
           <Box sx={{ textAlign: "center", py: 6 }}>
             <Typography variant="h2" component="h1" gutterBottom>
-              Welcome User
+              Welcome {session?.user?.name}
             </Typography>
             <Typography variant="h5" color="textSecondary" gutterBottom>
               Helping you manage coaching sessions and track progress

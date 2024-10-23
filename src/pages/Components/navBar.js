@@ -12,15 +12,9 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Link from "next/link";
 
 const NavBar = () => {
-
-
   return (
     <>
-      <AppBar
-        position="static"
-        color="transparent"
-        sx={{ backgroundColor: "#8B0000" }}
-      >
+      <AppBar position="static" color="primary">
         <Toolbar>
           <IconButton
             edge="start"
@@ -37,14 +31,10 @@ const NavBar = () => {
           </Typography>
           <Box sx={{ display: { xs: "none", md: "block" } }}>
             <Link href="/Components/Home" passHref>
-              <Button sx={{ color: "white" }} >
-                Home
-              </Button>
+              <Button sx={{ color: "white" }}>Home</Button>
             </Link>
             <Link href="/Login/Login" passHref>
-              <Button sx={{ color: "white" }} >
-                Login
-              </Button>
+              <Button sx={{ color: "white" }}>Login</Button>
             </Link>
           </Box>
         </Toolbar>

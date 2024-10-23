@@ -2,10 +2,11 @@ import { pool } from "../../../lib/db";
 
 export default async function handler(req, res) {
   if (req.method === "GET") {
+    const { StudentId } = req.query; 
     try {
       const client = await pool.connect();
       try {
-        const result = await client.query("SELECT * from public.student_marks");
+        const result = await client.query("SELECT * from public.student_marks WHERE student_id = $1", [StudentId]);
         res.status(200).json(result.rows);
       } finally {
         client.release();

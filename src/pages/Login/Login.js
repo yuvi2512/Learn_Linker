@@ -6,6 +6,7 @@ import {
   Stack,
   Card,
   CardHeader,
+  Box,
   Typography,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
@@ -37,79 +38,93 @@ const Login = () => {
 
     if (res?.error) {
       setLoginError(res.error);
-    } 
+    }
   };
 
-  useEffect(()=>{
-    if(session?.user?.role == 'student')
-    router.push("/Components/studentHome");
+  useEffect(() => {
+    if (session?.user?.role == "student")
+      router.push("/Components/studentHome");
 
-  if((session?.user?.role == 'teacher'))
-  router.push("/Components/TeacherHome");
-  },[session?.user])
+    if (session?.user?.role == "teacher")
+      router.push("/Components/TeacherHome");
+  }, [session?.user]);
 
   return (
-    <Card elevation={3} sx={{ margin: 10, backgroundColor: "#f3f6f9" }}>
-      <CardHeader
-        title="Login"
-        titleTypographyProps={{ variant: "subtitle2" }}
-        sx={{
-          backgroundColor: "rgba(74, 87, 169, 0.1)",
-          color: "#46464E",
-          padding: 1,
-          marginBottom: 2,
-        }}
-      />
-      <form noValidate onSubmit={handleSubmit(onSubmit)}>
-        <Stack spacing={2}>
-          <TextField
-            label="Email"
-            type="email"
-            {...register("email", {
-              required: "Email is required",
-              pattern: {
-                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                message: "Invalid Email Format",
-              },
-            })}
-            error={!!errors.email}
-            helperText={errors.email?.message}
-          />
-          <TextField
-            label="Password"
-            type="password"
-            {...register("password", {
-              required: "Password is Required",
-            })}
-            error={!!errors.password}
-            helperText={errors.password?.message}
-          />
-          <Button type="submit" variant="contained" color="primary">
-            Login
-          </Button>
-        </Stack>
+    <>
+      <Box
+        className="content-right"
+        sx={{ backgroundColor: "background.paper" }}
+      >
+        <Box
+          sx={{
+            p: [9],
+            height: "80%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+           <Box sx={{ width: "100%", maxWidth: 400 }}>
+          <form noValidate onSubmit={handleSubmit(onSubmit)}>
+            <Stack spacing={2}>
+              <TextField
+                label="Email"
+                type="email"
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: "Invalid Email Format",
+                  },
+                })}
+                error={!!errors.email}
+                helperText={errors.email?.message}
+              />
+              <TextField
+                label="Password"
+                type="password"
+                {...register("password", {
+                  required: "Password is Required",
+                })}
+                error={!!errors.password}
+                helperText={errors.password?.message}
+              />
+              <Button type="submit" variant="contained" color="primary">
+                Login
+              </Button>
+            </Stack>
 
-        {/* {loginError && ( */}
-        <Typography
-          variant="body2"
-          align="center"
-          pt={2}
-          style={{ color: "red" }}
-        >
-          {loginError}
-        </Typography>
-        {/* // )} */}
-      </form>
-      <Typography variant="body2" align="center" pt={5}>
-        Create a new account{" "}
-        <Link
-          href="/Register/Registration"
-          style={{ textDecoration: "none", color: "blue" }}
-        >
-          Sign Up
-        </Link>
-      </Typography>
-    </Card>
+            <Typography
+              variant="body2"
+              align="center"
+              pt={2}
+              style={{ color: "red" }}
+            >
+              {loginError}
+            </Typography>
+          </form>
+          <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    flexWrap: "wrap",
+                    justifyContent: "center",
+                  }}
+                >
+          <Typography variant="body2" align="center" pt={5}>
+            Create a new account{" "}
+            <Link
+              href="/Register/Registration"
+              style={{ textDecoration: "none", color: "blue" }}
+            >
+              Sign Up
+            </Link>
+          </Typography>
+          </Box>
+          </Box>
+        </Box>
+      </Box>
+    </>
   );
 };
 
