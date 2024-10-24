@@ -9,6 +9,7 @@ import {
   Divider,
   Box,
   Typography,
+  paper
 } from "@mui/material";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -55,7 +56,7 @@ const UpcomingTest = () => {
 
   return (
     <>
-      <Card>
+        <Card sx={{ height: "100%" }}>
         <CardHeader sx={{ pb: 2, pt: 2 }} title="Upcoming Test" />
         <CardContent sx={{ pt: 0 }}>
           <DataGrid

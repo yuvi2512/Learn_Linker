@@ -72,6 +72,10 @@ const GenerateMarksheet = () => {
       if (response.status === 200) {
        
         toast.success("Marksheet generated successfully!");
+        
+        setSelectedStudent("");
+        setSubjects([{ subject: "", marks: "" }]);
+
       } else {
         console.error("Error inserting data:", response.data.error);
         toast.error("Failed to generate marksheet.");

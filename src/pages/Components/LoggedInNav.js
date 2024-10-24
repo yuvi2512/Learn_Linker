@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {
   AppBar,
   Toolbar,
@@ -37,6 +37,16 @@ const NavBar = () => {
     fontWeight: "bold",
   };
 
+  useEffect(() => {
+    if (router.pathname === "/" && session) {
+      if (session.user.role === "teacher") {
+        router.push("/Components/TeacherHome");
+      } else if (session.user.role === "student") {
+        router.push("/Components/studentHome");
+      }
+    }
+  }, [router.pathname, session]); 
+
   return (
     <>
       <AppBar position="static" color="primary">
@@ -51,11 +61,7 @@ const NavBar = () => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <Link href="/" passHref>
-              <Button sx={isActive("/") ? activeStyle : { color: "white" }}>
-                Coaching System
-              </Button>
-            </Link>
+            Learn Linker
           </Typography>
 
           <Box sx={{ display: { xs: "none", md: "block" } }}>
@@ -142,18 +148,7 @@ const NavBar = () => {
                     View Result
                   </Button>
                 </Link>
-                <Link href="/Components/StudentSection/UpcomingTest" passHref>
-                  <Button
-                    sx={
-                      isActive("/Components/StudentSection/UpcomingTest")
-                        ? activeStyle
-                        : { color: "white" }
-                    }
-                  >
-                    View Upcoming Tests
-                  </Button>
-                </Link>
-              </>
+               </>
             )}
             <Button sx={{ color: "white" }} onClick={handleLogout}>
               Logout

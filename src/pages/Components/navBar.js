@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React,{useEffect} from "react";
 import {
   AppBar,
   Toolbar,
@@ -21,6 +21,12 @@ const NavBar = () => {
     fontWeight: "bold",
   };
 
+  useEffect(() => {
+    if (router.pathname === "/") {
+      router.push("/Components/Home");
+    }
+  }, [router.pathname]);
+
   return (
     <>
       <AppBar position="static" color="primary">
@@ -34,11 +40,7 @@ const NavBar = () => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <Link href="/" passHref>
-              <Button sx={isActive("/") ? activeStyle : { color: "white" }}>
-                Coaching System
-              </Button>
-            </Link>
+            Learn Linker
           </Typography>
           <Box sx={{ display: { xs: "none", md: "block" } }}>
             <Link href="/Components/Home" passHref>
