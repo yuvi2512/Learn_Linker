@@ -1,10 +1,9 @@
-// pages/api/marksheet.js
 
-import { pool } from "../../../lib/db"; // Adjust the import path according to your project structure
+import { pool } from "../../../lib/db"; 
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const { subjects } = req.body; // Directly get subjects from the request body
+    const { subjects } = req.body; 
 
     const client = await pool.connect();
 
@@ -26,7 +25,7 @@ export default async function handler(req, res) {
         ]);
       });
 
-      // Wait for all insertion queries to complete
+      
       await Promise.all(promises);
       await client.query("COMMIT");
 

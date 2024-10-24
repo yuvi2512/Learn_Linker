@@ -49,18 +49,18 @@ const Marksheet = () => {
   const generateMarksheet = async () => {
     const doc = new jsPDF();
   
-    // Load the image from the public folder
-    const imgUrl = "/ProjectLogo.png"; // Image is directly in the public folder
+  
+    const imgUrl = "/ProjectLogo.png"; 
     const img = new Image();
     img.src = imgUrl;
   
     img.onload = () => {
-      // Add the image as a watermark before adding the table
-      doc.setGState(new doc.GState({ opacity: 0.1 })); // Set opacity for the watermark
-      doc.addImage(img, "PNG", 30, 50, 150, 150); // Adjust position and size as needed
-      doc.setGState(new doc.GState({ opacity: 1 })); // Reset opacity back to full for text and table
   
-      // Now add the text and table over the watermark
+      doc.setGState(new doc.GState({ opacity: 0.1 })); 
+      doc.addImage(img, "PNG", 30, 50, 150, 150); 
+      doc.setGState(new doc.GState({ opacity: 1 })); 
+  
+
       doc.setFontSize(18);
       doc.text("Learn Linker", 105, 20, null, null, "center");
   
@@ -77,7 +77,7 @@ const Marksheet = () => {
         row.Total,
       ]);
   
-      // Generate the table after the watermark
+
       doc.autoTable({
         head: [headers],
         body: data,
@@ -88,7 +88,6 @@ const Marksheet = () => {
       const percentageText = `Percentage: ${calculatePercentage()}%`;
       doc.text(percentageText, 20, finalY);
   
-      // Save the PDF
       doc.save("marksheet.pdf");
     };
   };

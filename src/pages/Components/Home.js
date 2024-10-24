@@ -1,7 +1,5 @@
 "use client";
 import React from "react";
-import { useSession, signOut } from "next-auth/react";
-import { useEffect } from "react";
 import {
   Button,
   Container,
@@ -12,21 +10,20 @@ import {
   CardContent,
   Avatar,
 } from "@mui/material";
-import Image from "next/image"; // Import for logo usage
+import Image from "next/image";
 
 const Home = () => {
   return (
     <>
-      {/* Add a background gradient */}
+ 
       <Box
         sx={{
-          //background: "linear-gradient(to right, #f953c6, #b91d73)",
           minHeight: "100vh",
           py: 6,
         }}
       >
         <Container maxWidth="lg">
-          {/* Include logo */}
+  
           <Box sx={{ textAlign: "center", mb: 4 }}>
             <Image
               src="/ProjectLogo.png"
@@ -50,7 +47,7 @@ const Home = () => {
                 Helping you manage coaching sessions and track progress
                 seamlessly.
               </Typography>
-              {/* Button with hover effect */}
+        
               <Button
                 variant="contained"
                 color="secondary"
@@ -65,7 +62,6 @@ const Home = () => {
               </Button>
             </Box>
 
-            {/* Our Services Section */}
             <Box sx={{ py: 6 }}>
               <Typography
                 variant="h4"
@@ -129,7 +125,7 @@ const Home = () => {
               </Grid>
             </Box>
 
-            {/* Testimonials */}
+            
             <Box
               sx={{
                 py: 6,

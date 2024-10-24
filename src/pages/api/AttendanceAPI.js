@@ -1,9 +1,9 @@
 
-import { pool } from "../../../lib/db"; // Adjust the import path according to your project structure
+import { pool } from "../../../lib/db"; 
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const { subjects } = req.body; // Expecting an array of subject objects
+    const { subjects } = req.body; 
 
     const client = await pool.connect();
 
@@ -31,7 +31,7 @@ export default async function handler(req, res) {
         }
       );
 
-      // Wait for all insertion queries to complete
+     
       await Promise.all(promises);
       await client.query("COMMIT");
 

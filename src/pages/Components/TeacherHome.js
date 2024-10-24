@@ -1,4 +1,4 @@
-// pages/teacher/home.js
+
 import React from 'react';
 import { AppBar, Toolbar, Typography, Button, Container, Grid, Paper } from '@mui/material';
 import { Box } from '@mui/system';
@@ -7,14 +7,14 @@ const TeacherHomePage = () => {
   return (
     <div>
      
-      {/* Main content */}
+ 
       <Container maxWidth="lg" style={{ marginTop: '20px' }}>
         <Typography variant="h4" gutterBottom>
           Welcome, Teacher!
         </Typography>
 
         <Grid container spacing={3}>
-          {/* Manage Students Section */}
+      
           <Grid item xs={12} md={4}>
             <Paper elevation={3} style={{ padding: '20px', textAlign: 'center' }}>
               <Typography variant="h6">Manage Students</Typography>
@@ -27,7 +27,7 @@ const TeacherHomePage = () => {
             </Paper>
           </Grid>
 
-          {/* Manage Courses Section */}
+        
           <Grid item xs={12} md={4}>
             <Paper elevation={3} style={{ padding: '20px', textAlign: 'center' }}>
               <Typography variant="h6">Manage Courses</Typography>
@@ -40,7 +40,7 @@ const TeacherHomePage = () => {
             </Paper>
           </Grid>
 
-          {/* Schedule Section */}
+ 
           <Grid item xs={12} md={4}>
             <Paper elevation={3} style={{ padding: '20px', textAlign: 'center' }}>
               <Typography variant="h6">Manage Schedule</Typography>
@@ -54,7 +54,6 @@ const TeacherHomePage = () => {
           </Grid>
         </Grid>
 
-        {/* Extra section */}
         <Box mt={4}>
           <Typography variant="h6" gutterBottom>
             Announcements

@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs';
 import User  from '../../models/user';
 
 export default async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(405).end(); // Allow only POST method
+  if (req.method !== 'POST') return res.status(405).end(); 
 
   const { name, email, password, role } = req.body;
 
@@ -10,22 +10,22 @@ export default async function handler(req, res) {
     return res.status(400).json({ message: 'All fields are required' });
   }
 
-  // Check if the role is valid
+
   if (!['student', 'teacher', 'admin'].includes(role)) {
     return res.status(400).json({ message: 'Invalid role' });
   }
 
-  //Check if the user already exists
+
   const userExists = await User.findOne({ where: { email } });
   if (userExists) {
     return res.status(400).json({ message: 'User already exists' });
   }
 
-  // Hash the password
+  
   const hashedPassword = await bcrypt.hash(password, 10);
 
   try {
-    // Create a new user
+  
     const newUser = await User.create({
       name,
       email,

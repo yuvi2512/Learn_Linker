@@ -77,7 +77,7 @@ const Attendance = () => {
     const presentCount = selectedIds.length;
     const absentCount = rows.length - presentCount;
 
-    // Prepare attendance data before opening the dialog
+   
     const preparedAttendanceData = rows.map((student) => {
       const isPresent = selectedIds.includes(student.id.toString());
       return {
@@ -96,11 +96,11 @@ const Attendance = () => {
     });
 
     if (alreadyTaken) {
-      setAttendanceData(preparedAttendanceData); // Set the prepared attendance data
-      setOpenDialog(true); // Open dialog
+      setAttendanceData(preparedAttendanceData);
+      setOpenDialog(true);
     } else {
-      setAttendanceData(preparedAttendanceData); // Set the data even when not opening dialog
-      submitAttendance(preparedAttendanceData); // Submit if no need for dialog
+      setAttendanceData(preparedAttendanceData); 
+      submitAttendance(preparedAttendanceData); 
     }
   };
 

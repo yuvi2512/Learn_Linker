@@ -42,14 +42,7 @@ const HomePage = () => {
 
   return (
     <>
-      {/* <Box sx={{ textAlign: "left", mb: 4 }}>
-        <Image
-          src="/ProjectLogo.png"
-          alt="Learn Linker Logo"
-          width={150}
-          height={150}
-        />
-      </Box> */}
+    
       <Grid container spacing={6}>
       <Grid item xs={12} sm={12} lg={2}>
       <Image
