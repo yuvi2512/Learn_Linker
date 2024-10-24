@@ -164,7 +164,6 @@ const GenerateMarksheet = () => {
                   </Grid>
                   <Grid item xs={12} sm={2}>
                     <IconButton
-                      color="secondary"
                       onClick={() => handleRemoveRow(index)}
                       sx={{ marginTop: 2 }}
                     >

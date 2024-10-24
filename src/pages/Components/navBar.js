@@ -10,8 +10,17 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const NavBar = () => {
+  const router = useRouter();
+  const isActive = (pathname) => router.pathname === pathname;
+
+  const activeStyle = {
+    color: "black",
+    fontWeight: "bold",
+  };
+
   return (
     <>
       <AppBar position="static" color="primary">
@@ -26,15 +35,29 @@ const NavBar = () => {
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <Link href="/" passHref>
-              <Button sx={{ color: "white" }}>Coaching System</Button>
+              <Button sx={isActive("/") ? activeStyle : { color: "white" }}>
+                Coaching System
+              </Button>
             </Link>
           </Typography>
           <Box sx={{ display: { xs: "none", md: "block" } }}>
             <Link href="/Components/Home" passHref>
-              <Button sx={{ color: "white" }}>Home</Button>
+              <Button
+                sx={
+                  isActive("/Components/Home")
+                    ? activeStyle
+                    : { color: "white" }
+                }
+              >
+                Home
+              </Button>
             </Link>
             <Link href="/Login/Login" passHref>
-              <Button sx={{ color: "white" }}>Login</Button>
+              <Button
+                sx={isActive("/Login/Login") ? activeStyle : { color: "white" }}
+              >
+                Login
+              </Button>
             </Link>
           </Box>
         </Toolbar>

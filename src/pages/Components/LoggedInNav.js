@@ -18,25 +18,28 @@ import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
 const NavBar = () => {
-  const { data: session } = useSession(); // Retrieve session
+  const { data: session } = useSession();
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const router = useRouter()
+  const router = useRouter();
 
   const handleDrawerToggle = () => {
     setDrawerOpen(!drawerOpen);
   };
 
   const handleLogout = async () => {
-    await signOut({ callbackUrl: '/Login/Login' });
+    await signOut({ callbackUrl: "/Login/Login" });
   };
-  
+
+  const isActive = (pathname) => router.pathname === pathname;
+
+  const activeStyle = {
+    color: "black",
+    fontWeight: "bold",
+  };
 
   return (
     <>
-      <AppBar
-        position="static"
-       color="primary"
-      >
+      <AppBar position="static" color="primary">
         <Toolbar>
           <IconButton
             edge="start"
@@ -49,7 +52,9 @@ const NavBar = () => {
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <Link href="/" passHref>
-              <Button sx={{ color: "white" }}>Coaching System</Button>
+              <Button sx={isActive("/") ? activeStyle : { color: "white" }}>
+                Coaching System
+              </Button>
             </Link>
           </Typography>
 
@@ -57,26 +62,96 @@ const NavBar = () => {
             {session?.user.role === "teacher" && (
               <>
                 <Link href="/Components/TeacherHome" passHref>
-                  <Button sx={{ color: "white" }}>Home</Button>
+                  <Button
+                    sx={
+                      isActive("/Components/TeacherHome")
+                        ? activeStyle
+                        : { color: "white" }
+                    }
+                  >
+                    Home
+                  </Button>
                 </Link>
                 <Link href="/Components/Attendance" passHref>
-                  <Button sx={{ color: "white" }}>Attendance</Button>
+                  <Button
+                    sx={
+                      isActive("/Components/Attendance")
+                        ? activeStyle
+                        : { color: "white" }
+                    }
+                  >
+                    Attendance
+                  </Button>
                 </Link>
                 <Link href="/Components/GenerateMarksheet" passHref>
-                  <Button sx={{ color: "white" }}>Marksheet</Button>
+                  <Button
+                    sx={
+                      isActive("/Components/GenerateMarksheet")
+                        ? activeStyle
+                        : { color: "white" }
+                    }
+                  >
+                    Marksheet
+                  </Button>
                 </Link>
                 <Link href="/Components/Assignments" passHref>
-                  <Button sx={{ color: "white" }}>Assignment</Button>
+                  <Button
+                    sx={
+                      isActive("/Components/Assignments")
+                        ? activeStyle
+                        : { color: "white" }
+                    }
+                  >
+                    Assignment
+                  </Button>
+                </Link>
+                <Link href="/Components/Test" passHref>
+                  <Button
+                    sx={
+                      isActive("/Components/Test")
+                        ? activeStyle
+                        : { color: "white" }
+                    }
+                  >
+                    Test
+                  </Button>
                 </Link>
               </>
             )}
             {session?.user.role === "student" && (
               <>
                 <Link href="/Components/studentHome" passHref>
-                  <Button sx={{ color: "white" }}>Home</Button>
+                  <Button
+                    sx={
+                      isActive("/Components/studentHome")
+                        ? activeStyle
+                        : { color: "white" }
+                    }
+                  >
+                    Home
+                  </Button>
                 </Link>
                 <Link href="/Components/StudentSection/Marksheet" passHref>
-                  <Button sx={{ color: "white" }}>View Result</Button>
+                  <Button
+                    sx={
+                      isActive("/Components/StudentSection/Marksheet")
+                        ? activeStyle
+                        : { color: "white" }
+                    }
+                  >
+                    View Result
+                  </Button>
+                </Link>
+                <Link href="/Components/StudentSection/UpcomingTest" passHref>
+                  <Button
+                    sx={
+                      isActive("/Components/StudentSection/UpcomingTest")
+                        ? activeStyle
+                        : { color: "white" }
+                    }
+                  >
+                    View Upcoming Tests
+                  </Button>
                 </Link>
               </>
             )}
@@ -97,7 +172,7 @@ const NavBar = () => {
           <List>
             {session?.user.role === "teacher" && (
               <>
-               <ListItem button>
+                <ListItem button>
                   <Link href="/Components/TeacherHome" passHref>
                     <ListItemText primary="Home" />
                   </Link>

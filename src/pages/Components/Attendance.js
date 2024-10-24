@@ -35,7 +35,6 @@ const Attendance = () => {
       const response = await axios.get("/api/getStudentAPI");
       if (response.data) {
         setRows(response.data);
-        toast.success("Students data fetched successfully!");
       }
     } catch (error) {
       console.error("Error fetching data:", error);

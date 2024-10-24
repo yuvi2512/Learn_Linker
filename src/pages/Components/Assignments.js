@@ -3,7 +3,7 @@ import React from 'react'
 const Assignments = () => {
   return (
     <>
-     hii 
+   <h1>Upcoming Feature!!!!</h1> 
     </>
   )
 }
