@@ -9,7 +9,7 @@ const Assignment = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `/api/AssignmentAPI?student_name=${session.user.name}`
+        `/api/AssignmentAPI?student_name=${session?.user?.name}`
       );
       if (response.data) {
         console.log(response.data);
@@ -22,8 +22,8 @@ const Assignment = () => {
   };
 
   useEffect(() => {
-    if (session.user.name) fetchData();
-  }, [session.user.name]);
+    if (session?.user?.name) fetchData();
+  }, [session?.user?.name]);
 
   return (
     <>

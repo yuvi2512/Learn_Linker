@@ -39,9 +39,9 @@ const NavBar = () => {
 
   useEffect(() => {
     if (router.pathname === "/" && session) {
-      if (session.user.role === "teacher") {
-        router.push("/Components/TeacherHome");
-      } else if (session.user.role === "student") {
+      if (session?.user?.role === "teacher") {
+        router.push("/Components/Attendance");
+      } else if (session?.user?.role === "student") {
         router.push("/Components/studentHome");
       }
     }
@@ -67,17 +67,6 @@ const NavBar = () => {
           <Box sx={{ display: { xs: "none", md: "block" } }}>
             {session?.user.role === "teacher" && (
               <>
-                <Link href="/Components/TeacherHome" passHref>
-                  <Button
-                    sx={
-                      isActive("/Components/TeacherHome")
-                        ? activeStyle
-                        : { color: "white" }
-                    }
-                  >
-                    Home
-                  </Button>
-                </Link>
                 <Link href="/Components/Attendance" passHref>
                   <Button
                     sx={
@@ -178,11 +167,6 @@ const NavBar = () => {
           <List>
             {session?.user.role === "teacher" && (
               <>
-                <ListItem button>
-                  <Link href="/Components/TeacherHome" passHref>
-                    <ListItemText primary="Home" />
-                  </Link>
-                </ListItem>
                 <ListItem button>
                   <Link href="/Components/Attendance" passHref>
                     <ListItemText primary="Attendance" />

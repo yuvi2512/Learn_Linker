@@ -135,10 +135,10 @@ const Attendance = () => {
 
   return (
     <>
-      <Card sx={{ marginBottom: 4 }}>
+      <Card sx={{m: 10}}>
         <CardHeader sx={{ pb: 2, pt: 2 }} title="Attendance Summary" />
         <Divider />
-        <CardContent sx={{ pt: 4 }}>
+        <CardContent sx={{ mt: 5 }}>
           <Box sx={{ marginBottom: 2 }}>
             <TextField
               variant="outlined"
@@ -188,12 +188,8 @@ const Attendance = () => {
               hideFooter
             />
           </Box>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardContent sx={{ pt: 0 }}>
           <DataGrid
+          sx={{ mb: 2, mt: 4 }}
             rows={rows}
             columns={columns}
             getRowId={(row) => `${row.id}`}

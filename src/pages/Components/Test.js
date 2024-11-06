@@ -117,11 +117,11 @@ const Test = () => {
     <>
       <Grid container spacing={6}>
         <Grid item xs={12}>
-          <Card>
+          <Card sx={{ m: 10 }}>
             <CardHeader sx={{ pb: 2, pt: 2 }} title="Add Test" />
             <Divider />
 
-            <CardContent>
+            <CardContent sx={{ mb: 2, mt: 4 }}>
               <Grid container spacing={5}>
                 <Grid item xs={12} sm={5}>
                   <Typography>Select Date</Typography>
@@ -155,21 +155,16 @@ const Test = () => {
                   </Button>
                 </Grid>
               </Grid>
+              <DataGrid
+                rows={rows}
+                columns={columns}
+                getRowId={(row) => `${row.id}`}
+                disableRowSelectionOnClick
+              />
             </CardContent>
           </Card>
         </Grid>
       </Grid>
-
-      <Card>
-        <CardContent sx={{ pt: 0 }}>
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            getRowId={(row) => `${row.id}`}
-            disableRowSelectionOnClick
-          />
-        </CardContent>
-      </Card>
     </>
   );
 };

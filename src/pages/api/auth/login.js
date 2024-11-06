@@ -27,9 +27,9 @@ export default async function handler(req, res) {
     }
 
 
-    req.session.user = { id: user.id, email: user.email, name: user.name, role: user.role };
+    req?.session?.user = { id: user.id, email: user.email, name: user.name, role: user.role };
 
-    res.status(200).json({ message: 'Login successful', user: req.session.user });
+    res.status(200).json({ message: 'Login successful', user: req?.session?.user });
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong', error });
   }

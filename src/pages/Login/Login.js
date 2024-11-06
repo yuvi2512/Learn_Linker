@@ -5,11 +5,15 @@ import {
   Button,
   Stack,
   Card,
+  CardContent,
+  Divider,
   CardHeader,
   Box,
   Typography,
+  Grid
 } from "@mui/material";
 import { useForm } from "react-hook-form";
+import Image from "next/image";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
@@ -46,24 +50,17 @@ const Login = () => {
       router.push("/Components/studentHome");
 
     if (session?.user?.role == "teacher")
-      router.push("/Components/TeacherHome");
+      router.push("/Components/Attendance");
   }, [session?.user]);
 
   return (
     <>
-      <Box
-        className="content-right"
-        sx={{ backgroundColor: "background.paper" }}
-      >
-        <Box
-          sx={{
-            p: [9],
-            height: "80%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
+        <Card sx={{m: 10}}>
+        <CardHeader sx={{ pb: 2, pt: 2 }} title="Login Here!!" />
+        <Divider />
+        <CardContent sx={{ mt: 5 }}>
+        <Grid container spacing={5}>
+        <Grid item xs={12} sm={6}>
            <Box sx={{ width: "100%", maxWidth: 400 }}>
           <form noValidate onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={2}>
@@ -122,8 +119,20 @@ const Login = () => {
           </Typography>
           </Box>
           </Box>
-        </Box>
-      </Box>
+          </Grid>
+            <Grid item xs={12} sm={6}>
+            <Image
+              src="/login.png"
+              alt="Learn Linker Logo"
+              width={500}
+              height={500}
+            />
+            </Grid>
+          </Grid>
+          </CardContent>
+          
+          </Card>
+        
     </>
   );
 };
