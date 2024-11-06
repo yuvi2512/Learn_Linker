@@ -77,6 +77,14 @@ const Register = () => {
         <CardContent sx={{ mt: 5 }}>
           <Grid container spacing={5}>
             <Grid item xs={12} sm={6}>
+              <Image
+                src="/registration.png"
+                alt="Learn Linker Logo"
+                width={500}
+                height={500}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
               <Box sx={{ width: "100%", maxWidth: 400 }}>
                 <Box sx={{ my: 2 }}>
                   <Typography variant="h3" sx={{ mb: 1.5 }}>
@@ -205,14 +213,6 @@ const Register = () => {
                   </Stack>
                 </form>
               </Box>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-            <Image
-              src="/registration.png"
-              alt="Learn Linker Logo"
-              width={500}
-              height={500}
-            />
             </Grid>
           </Grid>
         </CardContent>
