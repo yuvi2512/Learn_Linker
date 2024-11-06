@@ -85,7 +85,7 @@ const Assignments = () => {
   return (
     <Grid container spacing={6}>
       <Grid item xs={12}>
-        <Card sx={{m: 10}}>
+        <Card sx={{m: 5}}>
           <CardHeader sx={{ pb: 2, pt: 2 }} title="Assignments" />
           <Divider />
 

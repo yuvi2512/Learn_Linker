@@ -48,18 +48,6 @@ const Home = () => {
                 seamlessly.
               </Typography>
         
-              <Button
-                variant="contained"
-                color="secondary"
-                size="large"
-                sx={{
-                  mt: 4,
-                  transition: "background 0.3s",
-                  "&:hover": { backgroundColor: "#b91d73" },
-                }}
-              >
-                Get Started
-              </Button>
             </Box>
 
             <Box sx={{ py: 6 }}>

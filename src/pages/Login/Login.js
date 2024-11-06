@@ -55,7 +55,7 @@ const Login = () => {
 
   return (
     <>
-        <Card sx={{m: 10}}>
+        <Card sx={{m: 5}}>
         <CardHeader sx={{ pb: 2, pt: 2 }} title="Login Here!!" />
         <Divider />
         <CardContent sx={{ mt: 5 }}>

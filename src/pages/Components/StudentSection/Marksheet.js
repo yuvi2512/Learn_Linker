@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, CardContent, Typography, Button, Grid } from "@mui/material";
+import { Card, CardContent, Typography, Button, Grid,Divider } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
@@ -103,7 +103,7 @@ const Marksheet = () => {
   return (
     <Grid container spacing={6}>
       <Grid item xs={12}>
-        <Card>
+      <Card sx={{m: 5}}>
           <CardContent>
             <Button
               variant="contained"
@@ -114,7 +114,8 @@ const Marksheet = () => {
               Generate Marksheet
             </Button>
           </CardContent>
-          <CardContent sx={{ pt: 0 }}>
+          <Divider/>
+          <CardContent sx={{ mt: 5 }}>
             <DataGrid
               rows={rows}
               columns={columns}
