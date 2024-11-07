@@ -34,19 +34,32 @@ const Attendance = () => {
     try {
       const response = await axios.get("/api/getStudentAPI");
       if (response.data) {
-        setRows(response.data);
+
+        const sortedData = response.data
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .map((student, index) => ({
+            ...student,
+            srNo: index + 1, 
+          }));
+        setRows(sortedData);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
       toast.error("Failed to fetch students data.");
     }
   };
+  
 
   useEffect(() => {
     fetchData();
   }, []);
 
   const columns = [
+    {
+      field: "srNo",
+      headerName: "Sr No.",
+      width: 100,
+    },
     {
       field: "name",
       headerName: "Name",
