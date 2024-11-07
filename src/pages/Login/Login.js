@@ -11,6 +11,7 @@ import {
   Box,
   Typography,
   Grid,
+  Alert,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
@@ -34,6 +35,7 @@ const Login = () => {
   const router = useRouter();
 
   const onSubmit = async (formData) => {
+    setLoginError("")
     const res = await signIn("credentials", {
       redirect: false,
       email: formData.email,
@@ -59,15 +61,21 @@ const Login = () => {
         <Divider />
         <CardContent sx={{ mt: 5 }}>
           <Grid container spacing={5}>
-          <Grid item xs={12} sm={6} >
-          <Box sx={{ display: "flex", justifyContent: "center", marginLeft: 2 }}>
-              <Image
-                src="/login.png"
-                alt="Learn Linker Logo"
-                width={300}
-                height={300}
-                marginLeft={15}
-              />
+            <Grid item xs={12} sm={6}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  marginLeft: 2,
+                }}
+              >
+                <Image
+                  src="/login.png"
+                  alt="Learn Linker Logo"
+                  width={300}
+                  height={300}
+                  marginLeft={15}
+                />
               </Box>
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -107,7 +115,9 @@ const Login = () => {
                     pt={2}
                     style={{ color: "red" }}
                   >
-                    {loginError}
+                    {loginError && (
+                      <Alert severity={"error"}>{loginError}</Alert>
+                    )}
                   </Typography>
                 </form>
                 <Box
@@ -130,7 +140,6 @@ const Login = () => {
                 </Box>
               </Box>
             </Grid>
-           
           </Grid>
         </CardContent>
       </Card>
