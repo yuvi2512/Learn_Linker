@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardContent,
@@ -7,44 +7,17 @@ import {
   Grid,
   CardHeader,
   Divider,
-  MenuItem,
 } from "@mui/material";
 import axios from "axios";
-import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 
 const Assignments = () => {
-  const [selectedStudent, setSelectedStudent] = useState("");
-  const [students, setStudents] = useState([]);
-  const [assignmentTitle, setAssignmentTitle] = useState("");
+  const [selectedSubject, setSelectedSubject] = useState("");
+  const [EndDate, setEndDate] = useState("");
   const [assignmentDescription, setAssignmentDescription] = useState("");
-  const { data: sessionData } = useSession();
 
-  const TeacherName = sessionData?.user?.name;
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get("/api/getStudentAPI");
-      if (response.data) {
-        setStudents(response.data);
-        toast.success("Students data fetched successfully!");
-      }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      toast.error("Failed to fetch students data.");
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const handleStudentChange = (event) => {
-    setSelectedStudent(event.target.value);
-  };
-
-  const handleTitleChange = (event) => {
-    setAssignmentTitle(event.target.value);
+  const handleSubjectChange = (event) => {
+    setSelectedSubject(event.target.value);
   };
 
   const handleDescriptionChange = (event) => {
@@ -54,14 +27,9 @@ const Assignments = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const selectedStudentName = students.find(
-      (student) => student.id === selectedStudent
-    )?.name;
-
     const payload = {
-      teacher_name: TeacherName,
-      student_name: selectedStudentName,
-      title: assignmentTitle,
+      subject: selectedSubject,
+      end_date: EndDate,
       description: assignmentDescription,
     };
 
@@ -72,8 +40,8 @@ const Assignments = () => {
       if (response.status === 200) {
         toast.success("Assignment Uploaded successfully!");
 
-        setSelectedStudent("");
-        setAssignmentTitle("");
+        setSelectedSubject("");
+        setEndDate("");
         setAssignmentDescription("");
       }
     } catch (error) {
@@ -85,7 +53,7 @@ const Assignments = () => {
   return (
     <Grid container spacing={6}>
       <Grid item xs={12}>
-        <Card sx={{m: 5}}>
+        <Card sx={{ m: 5 }}>
           <CardHeader sx={{ pb: 2, pt: 2 }} title="Assignments" />
           <Divider />
 
@@ -93,29 +61,23 @@ const Assignments = () => {
             <Grid container spacing={5}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  select
                   fullWidth
                   margin="normal"
-                  label="Select Student"
+                  label="Subject"
                   variant="outlined"
-                  value={selectedStudent}
-                  onChange={handleStudentChange}
-                >
-                  {students.map((student) => (
-                    <MenuItem key={student.id} value={student.id}>
-                      {student.name}
-                    </MenuItem>
-                  ))}
-                </TextField>
+                  value={selectedSubject}
+                  onChange={handleSubjectChange}
+                />
               </Grid>
               <Grid item xs={12} sm={6}>
+
                 <TextField
+                  variant="outlined"
                   fullWidth
                   margin="normal"
-                  label="Assignment Title"
-                  variant="outlined"
-                  value={assignmentTitle}
-                  onChange={handleTitleChange}
+                  type="date"
+                  value={EndDate}
+                  onChange={(e) => setEndDate(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} sm={12}>
@@ -135,7 +97,7 @@ const Assignments = () => {
                 <Button
                   onClick={handleSubmit}
                   variant="contained"
-                  color="primary"
+                  color="primary" 
                   sx={{ margin: 2 }}
                 >
                   Submit

@@ -53,13 +53,9 @@ const HomePage = () => {
         />
         </Grid>
         <Grid item xs={12} sm={12} lg={8}>
-          <Box sx={{ textAlign: "center", py: 6 }}>
-            <Typography variant="h2" component="h1" gutterBottom>
+          <Box sx={{ textAlign: "center", pt: 6 }}>
+            <Typography variant="h2" component="h1" >
               Welcome {session?.user?.name}
-            </Typography>
-            <Typography variant="h5" color="textSecondary" gutterBottom>
-              Helping you manage coaching sessions and track progress
-              seamlessly.
             </Typography>
           </Box>
         </Grid>

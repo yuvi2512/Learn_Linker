@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ReactApexcharts from "../react-apexcharts";
-import {Card,Typography} from "@mui/material";
+import { Card, Typography } from "@mui/material";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 
@@ -18,6 +18,8 @@ const AnalyticsPieStatusBreakdown = ({ attendanceData }) => {
 
       const percentage = (totalPresent / totalDays) * 100;
       setAttendancePercentage(percentage);
+    } else {
+      setSeries([]); 
     }
   }, [attendanceData]);
 
@@ -40,14 +42,20 @@ const AnalyticsPieStatusBreakdown = ({ attendanceData }) => {
     <Card sx={{ height: "100%" }}>
       <CardHeader sx={{ pb: 0 }} title="Attendance" />
       <CardContent>
-        <ReactApexcharts
-          type="pie"
-          height={350}
-          series={series}
-          options={options}
-        />
+        {series.length > 0 ? (
+          <ReactApexcharts
+            type="pie"
+            height={350}
+            series={series}
+            options={options}
+          />
+        ) : (
+          <Typography color="primary" variant="h5" sx={{ mt: 2, textAlign: "center" }}>
+            No classes have been held yet
+          </Typography>
+        )}
 
-        {attendancePercentage < 75 && (
+        {series.length > 0 && attendancePercentage < 75 && (
           <Typography color="error" sx={{ mt: 2 }}>
             Your attendance is low!
           </Typography>

@@ -4,7 +4,7 @@ export default async function handler(req, res) {
   if (req.method === "POST") {
     const { data } = req.body;
 
-    const { teacher_name, student_name, title, description } = data;
+    const { subject, end_date, description } = data;
 
     const client = await pool.connect();
 
@@ -12,15 +12,14 @@ export default async function handler(req, res) {
       await client.query("BEGIN");
 
       const queryText = `
-           INSERT INTO public."assignments" (teacher_name, student_name , title, description)
-          VALUES ($1, $2, $3, $4)
-          ON CONFLICT (teacher_name, student_name , title) DO NOTHING
+           INSERT INTO public."assignments" (subject, end_date , description)
+          VALUES ($1, $2, $3)
+          ON CONFLICT (subject, end_date , description) DO NOTHING
           `;
 
       await client.query(queryText, [
-        teacher_name,
-        student_name,
-        title,
+        subject,
+        end_date,
         description,
       ]);
 
@@ -38,27 +37,20 @@ export default async function handler(req, res) {
       client.release();
     }
   } else if (req.method === "GET") {
-    const { student_name } = req.query; 
 
-    if (!student_name) {
-      res.status(400).json({ error: "student_name is required" });
-      return;
-    }
-
-    try {
+       try {
       const client = await pool.connect();
       try {
         const queryText = `
           SELECT * FROM public.assignments
-          WHERE student_name = $1
         `;
 
-        const result = await client.query(queryText, [student_name]);
+        const result = await client.query(queryText);
 
         if (result.rows.length === 0) {
           res
             .status(404)
-            .json({ message: "No assignments found for the student" });
+            .json({ message: "No assignments found." });
         } else {
           res.status(200).json(result.rows);
         }

@@ -51,6 +51,7 @@ const Attendance = () => {
   
 
   useEffect(() => {
+    GetAttendance();
     fetchData();
   }, []);
 
@@ -134,7 +135,7 @@ const Attendance = () => {
   const CheckAttendance = async () => {
     try {
       const response = await axios.get("/api/AttendanceAPI", {
-        params: { selectedDate: selectedDate },
+        params: { service:'CHECKATTENDANCE',selectedDate: selectedDate },
       });
       if (response.status === 200 && response.data.length > 0) {
         return true;
@@ -144,6 +145,20 @@ const Attendance = () => {
       toast.error("Failed to check attendance.");
     }
     return false;
+  };
+
+  const GetAttendance = async () => {
+    try {
+      const response = await axios.get("/api/AttendanceAPI", {
+        params: { service:'GETATTENDANCE'},
+      });
+      if (response.status === 200 && response.data.length > 0) {
+       console.log(response.data)
+      }
+    } catch (error) {
+      console.error("Error Getting attendance:", error);
+      toast.error("Failed to get attendance.");
+    }
   };
 
   return (

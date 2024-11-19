@@ -1,9 +1,9 @@
 
-import { pool } from "../../../lib/db"; 
+import { pool } from "../../../lib/db";
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const { subjects } = req.body; 
+    const { subjects } = req.body;
 
     const client = await pool.connect();
 
@@ -12,7 +12,7 @@ export default async function handler(req, res) {
 
       const promises = subjects.map(
         ({ student_id, student_name, present, absent, date }) => {
-            const queryText = `
+          const queryText = `
             INSERT INTO public."attendance" (student_id, student_name, present, absent, date)
             VALUES ($1, $2, $3, $4, $5)
             ON CONFLICT (student_id, date) 
@@ -20,7 +20,7 @@ export default async function handler(req, res) {
               present = EXCLUDED.present,
               absent = EXCLUDED.absent
           `;
-          
+
           return client.query(queryText, [
             student_id,
             student_name,
@@ -31,7 +31,7 @@ export default async function handler(req, res) {
         }
       );
 
-     
+
       await Promise.all(promises);
       await client.query("COMMIT");
 
@@ -47,23 +47,40 @@ export default async function handler(req, res) {
     }
   }
   else if (req.method === "GET") {
-    try {
-      const { selectedDate } = req.query; 
-  
-      const client = await pool.connect();
+    const { service, selectedDate } = req.query;
+
+    if (service == 'CHECKATTENDANCE') {
       try {
-        const result = await client.query("SELECT * FROM public.attendance WHERE date = $1", [selectedDate]);
-     
-        res.status(200).json(result.rows);
-      } finally {
-        client.release();
+        const client = await pool.connect();
+        try {
+          const result = await client.query("SELECT * FROM public.attendance WHERE date = $1", [selectedDate]);
+
+          res.status(200).json(result.rows);
+        } finally {
+          client.release();
+        }
+      } catch (error) {
+        console.error("Error executing query", error);
+        res.status(500).json({ error: "An error occurred" });
       }
-    } catch (error) {
-      console.error("Error executing query", error);
-      res.status(500).json({ error: "An error occurred" });
+    }
+    if (service == 'GETATTENDANCE') {
+      try {
+        const client = await pool.connect();
+        try {
+          const result = await client.query("SELECT * FROM public.attendance");
+
+          res.status(200).json(result.rows);
+        } finally {
+          client.release();
+        }
+      } catch (error) {
+        console.error("Error executing query", error);
+        res.status(500).json({ error: "An error occurred" });
+      }
     }
   }
-  
+
   else {
     res.status(405).json({ error: "Method Not Allowed" });
   }

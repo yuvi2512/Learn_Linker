@@ -8,14 +8,12 @@ import {
   Box,
   Card,
   CardContent,
-  Avatar,
 } from "@mui/material";
 import Image from "next/image";
 
 const Home = () => {
   return (
     <>
- 
       <Box
         sx={{
           minHeight: "100vh",
@@ -23,31 +21,47 @@ const Home = () => {
         }}
       >
         <Container maxWidth="lg">
-  
-          <Box sx={{ textAlign: "center", mb: 4 }}>
-            <Image
-              src="/ProjectLogo.png"
-              alt="Learn Linker Logo"
-              width={150}
-              height={150}
-            />
-          </Box>
-
           <Card sx={{ backgroundColor: "#fff", boxShadow: 3, borderRadius: 4 }}>
-            <Box sx={{ textAlign: "center", py: 6 }}>
-              <Typography
-                variant="h2"
-                component="h1"
-                gutterBottom
-                color="primary"
+            <Box sx={{ textAlign: "center" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "left",
+                  gap: 2,
+                }}
               >
-                Welcome to Learn Linker
-              </Typography>
-              <Typography variant="h5" color="textSecondary" gutterBottom>
-                Helping you manage coaching sessions and track progress
-                seamlessly.
-              </Typography>
-        
+                <Image
+                  src="/ProjectLogo.png"
+                  alt="Learn Linker Logo"
+                  width={200}
+                  height={180}
+
+                />
+                <Box sx={{ ml: 8, textAlign: "center" }}>
+                  <Typography variant="h2" component="h1" color="primary">
+                    Welcome to Learn Linker
+                  </Typography>
+                  <Box
+                    sx={{
+                      borderBottom: "2px solid",
+                      borderColor: "primary.main",
+                      width: "75%",
+                      margin: "8px auto",
+                    }}
+                  />
+                  <Typography
+                    variant="caption"
+                    sx={{ fontSize: "0.90rem", color: "text.secondary" }}
+                  >
+                    Helping you manage coaching sessions and track progress
+                    seamlessly.
+                  </Typography>
+                </Box>
+
+              </Box>
+
+
             </Box>
 
             <Box sx={{ py: 6 }}>
@@ -106,72 +120,6 @@ const Home = () => {
                       <Typography variant="body2" color="textSecondary">
                         Communicate with clients via integrated messaging and
                         updates.
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              </Grid>
-            </Box>
-
-            
-            <Box
-              sx={{
-                py: 6,
-                backgroundColor: "#f5f5f5",
-                borderRadius: "0 0 4px 4px",
-              }}
-            >
-              <Typography
-                variant="h4"
-                align="center"
-                gutterBottom
-                color="primary"
-              >
-                What Our Clients Say
-              </Typography>
-              <Grid container spacing={4} justifyContent="center">
-                <Grid item xs={12} sm={6} md={4}>
-                  <Card sx={{ boxShadow: 3 }}>
-                    <CardContent>
-                      <Box display="flex" alignItems="center" mb={2}>
-                        <Avatar
-                          alt="John Doe"
-                          src="/static/images/avatar/1.jpg"
-                        />
-                        <Box ml={2}>
-                          <Typography variant="subtitle1">John Doe</Typography>
-                          <Typography variant="body2" color="textSecondary">
-                            Professional Coach
-                          </Typography>
-                        </Box>
-                      </Box>
-                      <Typography variant="body2">
-                        "This platform has transformed the way I manage my
-                        coaching clients."
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Grid>
-                <Grid item xs={12} sm={6} md={4}>
-                  <Card sx={{ boxShadow: 3 }}>
-                    <CardContent>
-                      <Box display="flex" alignItems="center" mb={2}>
-                        <Avatar
-                          alt="Jane Smith"
-                          src="/static/images/avatar/2.jpg"
-                        />
-                        <Box ml={2}>
-                          <Typography variant="subtitle1">
-                            Jane Smith
-                          </Typography>
-                          <Typography variant="body2" color="textSecondary">
-                            Life Coach
-                          </Typography>
-                        </Box>
-                      </Box>
-                      <Typography variant="body2">
-                        "Highly recommend this tool for any coaching
-                        professional!"
                       </Typography>
                     </CardContent>
                   </Card>
